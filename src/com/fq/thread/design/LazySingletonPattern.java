@@ -1,8 +1,7 @@
-package com.fq.thread;
+package com.fq.thread.design;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.LayoutFocusTraversalPolicy;
 
 /**
  * @author fangqi
