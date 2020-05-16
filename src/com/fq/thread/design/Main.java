@@ -8,10 +8,15 @@ public class Main {
 //        drive.drive(new BaoMaDriveStragegy());
 //        drive.drive(new BenChiDriveStragegy());
 //        drive.drive(new AirplaneDriveStragegy());
-        AbstrackMediator abstrackMediator = new CommunicateMediator();
-        DevelopColleague developColleague = new DevelopColleague(abstrackMediator);
-        TestColleague testColleague = new TestColleague(abstrackMediator);
-        ProductColleague productColleague = new ProductColleague(abstrackMediator);
-        developColleague.repairBug();
+//        AbstrackMediator abstrackMediator = new CommunicateMediator();
+//        DevelopColleague developColleague = new DevelopColleague(abstrackMediator);
+//        TestColleague testColleague = new TestColleague(abstrackMediator);
+//        ProductColleague productColleague = new ProductColleague(abstrackMediator);
+//        developColleague.repairBug();
+
+        //访问者模式--要求被访问者对访问者开发响应的信息
+        IVisitor visitor = new SubwayVisitor();
+        AbstractPerson person = new OfficeWorker();
+        person.accept(visitor);
     }
 }
