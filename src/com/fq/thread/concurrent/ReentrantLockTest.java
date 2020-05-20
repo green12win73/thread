@@ -26,7 +26,7 @@ public class ReentrantLockTest {
         }catch (Exception e){
 
         }finally {
-            lock.unlock();
+//            lock.unlock();
         }
     }
 
@@ -111,9 +111,12 @@ public class ReentrantLockTest {
 
     public static void main(String[] args) {
         ReentrantLockTest lockTest = new ReentrantLockTest();
-//        new Thread(()->{
-//            lockTest.add();
-//        }).start();
+        new Thread(()->{
+            lockTest.add();
+        }).start();
+        new Thread(()->{
+            lockTest.add();
+        }).start();
 //        new Thread(()->{
 //            lockTest.tryLock();
 //        }).start();
@@ -125,17 +128,17 @@ public class ReentrantLockTest {
 //        });
 //        thread.start();
 
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            threads.add(new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                lockTest.lock();
-                            }
-                        }, "thread-" + i));
-        }
-        for (Thread thread : threads) {
-            thread.start();
-        }
+//        List<Thread> threads = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            threads.add(new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                lockTest.lock();
+//                            }
+//                        }, "thread-" + i));
+//        }
+//        for (Thread thread : threads) {
+//            thread.start();
+//        }
     }
 }

@@ -15,8 +15,14 @@ public class Main {
 //        developColleague.repairBug();
 
         //访问者模式--要求被访问者对访问者开发响应的信息
-        IVisitor visitor = new SubwayVisitor();
-        AbstractPerson person = new OfficeWorker();
-        person.accept(visitor);
+//        IVisitor visitor = new SubwayVisitor();
+//        AbstractPerson person = new OfficeWorker();
+//        person.accept(visitor);
+
+        //门面模式
+        ExpenseProcessFacade process = new ExpenseProcessFacade();
+        System.out.println("准妈妈到医院生孩子...");
+        process.process();
+        process.processRecovery();
     }
 }
