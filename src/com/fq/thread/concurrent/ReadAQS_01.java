@@ -52,7 +52,7 @@ public class ReadAQS_01 {
         } catch (Exception e) {
 
         } finally {
-//            lock.unlock();
+            lock.unlock();
         }
     }
 
@@ -68,7 +68,15 @@ public class ReadAQS_01 {
             aqs_01.test();
         },"Thread-01").start();
         new Thread(()->{
+            try {
+                Thread.sleep(50000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             aqs_01.test();
         },"Thread-02").start();
+        new Thread(()->{
+            aqs_01.test();
+        },"Thread-03").start();
     }
 }
