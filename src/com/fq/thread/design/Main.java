@@ -20,9 +20,17 @@ public class Main {
 //        person.accept(visitor);
 
         //门面模式
-        ExpenseProcessFacade process = new ExpenseProcessFacade();
-        System.out.println("准妈妈到医院生孩子...");
-        process.process();
-        process.processRecovery();
+//        ExpenseProcessFacade process = new ExpenseProcessFacade();
+//        System.out.println("准妈妈到医院生孩子...");
+//        process.process();
+//        process.processRecovery();
+        String st1 = "和谐";
+        String st2 = "社会";
+        String st3 = "和谐社会";
+        String st4 = st3;
+        System.out.println(st3 == st4);
+        System.out.println(st3 == (st1+st2));
+        System.out.println(st3 == (st1+st2).intern());
     }
+
 }
