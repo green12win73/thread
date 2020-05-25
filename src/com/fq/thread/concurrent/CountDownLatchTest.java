@@ -16,11 +16,19 @@ public class CountDownLatchTest {
 
         for (int i = 0; i < 10; i++) {
             new Thread(()->{
+                //每执行一次该方法，上面设置的10的参数就减一，直到等于0为止
                 latch.countDown();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(Thread.currentThread().getName()+"执行完成!");
             },"thread-"+i).start();
         }
         try {
+            System.out.println("==============");
+            //执行等待操作，直到上面设置的10参数等于0，再执行后面的代码
             latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
