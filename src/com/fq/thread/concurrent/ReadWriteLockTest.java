@@ -40,27 +40,32 @@ public class ReadWriteLockTest {
 
         }
         finally {
-            writeLock.unlock();
+//            writeLock.unlock();
         }
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
+//        for (int i = 0; i < 10; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    try {
+                        Thread.sleep(10000);
+                    }catch (Exception e){
+
+                    }
                     read();
                 }
-            }, "thread-" + i).start();
-        }
-        for (int i = 0; i < 2; i++) {
+            }, "thread-" + 1).start();
+//        }
+//        for (int i = 0; i < 2; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     write();
                 }
-            }, "thread-" + i).start();
-        }
+            }, "thread-" + 2).start();
+//        }
 
     }
 }
