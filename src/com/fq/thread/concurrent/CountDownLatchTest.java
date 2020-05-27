@@ -33,7 +33,9 @@ public class CountDownLatchTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.out.println("所有线程执行完成");
+        while(true){}
         //以上这种方式等价于循环执行Thread.join()，直到所有线程都执行完成；
         //但是Thread.join性能上不如以上方法，thread.join后必须等待thread执行完成后，才能继续往下，
         //而CountDownLatch则不需要，10线程可以并发执行
