@@ -25,7 +25,7 @@ public class ReadWriteLockTest {
         }catch (Exception e){
 
         }finally {
-            readLock.unlock();
+//            readLock.unlock();
         }
         return 0;
     }
@@ -33,9 +33,24 @@ public class ReadWriteLockTest {
     public static void write(){
         writeLock.lock();
         try {
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
             count++;
             System.out.println(Thread.currentThread().getName()+",更新count="+count);
+            test();
+        }catch (Exception e){
+
+        }
+        finally {
+//            writeLock.unlock();
+        }
+    }
+
+    private static void test(){
+        writeLock.lock();
+        try {
+            Thread.sleep(1000);
+            count++;
+            System.out.println(Thread.currentThread().getName()+",锁重入");
         }catch (Exception e){
 
         }
@@ -45,7 +60,7 @@ public class ReadWriteLockTest {
     }
 
     public static void main(String[] args) {
-//        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -56,16 +71,20 @@ public class ReadWriteLockTest {
                     }
                     read();
                 }
-            }, "thread-" + 1).start();
-//        }
-//        for (int i = 0; i < 2; i++) {
+            }, "thread-reader" + i).start();
+        }
+        for (int i = 0; i < 2; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+//                    try {
+//                        Thread.sleep(10000);
+//                    }catch (Exception e){
+//
+//                    }
                     write();
                 }
-            }, "thread-" + 2).start();
-//        }
-
+            }, "thread-write-" + i).start();
+        }
     }
 }

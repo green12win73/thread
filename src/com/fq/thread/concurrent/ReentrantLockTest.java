@@ -26,7 +26,7 @@ public class ReentrantLockTest {
         }catch (Exception e){
 
         }finally {
-//            lock.unlock();
+            lock.unlock();
         }
     }
 

@@ -15,11 +15,31 @@ public class ReadAQS_02 {
     private ReentrantLock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
 
-    public void test(){
+    public void await(){
         try{
             lock.lock();
-            System.out.println("================");
+            System.out.println("========"+Thread.currentThread()+"获取到锁========");
+            //阻塞，当前线程添加到阻塞队列，释放锁，被唤醒后会继续争抢锁
+            System.out.println("========"+Thread.currentThread()+"调用await()阻塞线程，释放锁========");
             condition.await();
+            s += "["+Thread.currentThread().getName()+"],";
+            System.out.println(Thread.currentThread()+"被唤醒！！！");
+            System.out.println("s="+s);
+        }catch (Exception e){
+
+        }finally {
+            lock.unlock();
+        }
+    }
+
+    public void signalAll(){
+        try{
+            lock.lock();
+            System.out.println("========"+Thread.currentThread()+"========");
+            //唤醒所有阻塞的队列中的线程，争抢锁
+            System.out.println("========"+Thread.currentThread()+"唤醒所有阻塞线程，争抢锁========");
+            condition.signalAll();//唤醒所有节点从首节点开始
+//            condition.signal();//唤醒首节点的等待线程
         }catch (Exception e){
 
         }finally {
@@ -30,24 +50,18 @@ public class ReadAQS_02 {
 
     public static void main(String[] args) {
         ReadAQS_02 aqs_01 = new ReadAQS_02();
+        for (int i = 0; i < 100; i++) {
+            new Thread(()->{
+                aqs_01.await();
+            },"Thread-"+i).start();
+        }
         new Thread(()->{
             try {
-                Thread.sleep(60000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            aqs_01.test();
-        },"Thread-01").start();
-        new Thread(()->{
-            try {
-                Thread.sleep(50000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            aqs_01.test();
-        },"Thread-02").start();
-        new Thread(()->{
-            aqs_01.test();
+            aqs_01.signalAll();
         },"Thread-03").start();
     }
 }
