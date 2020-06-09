@@ -12,9 +12,9 @@ import java.util.Map;
 public class MapContainerTest {
 
     public static void main(String[] args) {
-        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
-        for (int i = 0; i < 10; i++) {
-            map.put("map_"+i,i);
-        }
+//        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+//        for (int i = 0; i < 10; i++) {
+//            map.put("map_"+i,i);
+//        }
     }
 }
