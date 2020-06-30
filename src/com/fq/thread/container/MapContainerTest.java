@@ -1,8 +1,10 @@
 package com.fq.thread.container;
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author fangqi
@@ -16,5 +18,69 @@ public class MapContainerTest {
 //        for (int i = 0; i < 10; i++) {
 //            map.put("map_"+i,i);
 //        }
+
+        testIdentityHashMap();
+    }
+
+    public static void testIdentityHashMap(){
+        Map<String, Integer> hashMap = new IdentityHashMap<>();
+        for (int i = 0; i < 100; i++) {
+            if(i==64){
+                System.out.println();
+            }
+            hashMap.put("skip_key_"+i, i);
+        }
+        System.out.println("=======================");
+
+    }
+
+    public static void testLinkedHashMap(){
+        Map<String, Integer> hashMap = new LinkedHashMap<>();
+        for (int i = 0; i < 100; i++) {
+            if(i==64){
+                System.out.println();
+            }
+            hashMap.put("skip_key_"+i, i);
+        }
+        System.out.println("=======================");
+
+    }
+
+    public static void testHashMap(){
+        Map<String, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < 100000; i++) {
+            if(i==64){
+                System.out.println();
+            }
+            hashMap.put("skip_key_"+i, i);
+        }
+        System.out.println("=======================");
+
+    }
+
+
+    public static void testSkipList(){
+        ConcurrentSkipListMap<String, Integer> skipListMap = new ConcurrentSkipListMap<>();
+        for (int i = 0; i < 300; i++) {
+            skipListMap.put("skip_key_"+i, i);
+        }
+        System.out.println("=======================");
+
+    }
+
+    public static void test(){
+        Index[] arr = new Index[11];
+        Index idx = null;
+        for (int i = 0; i < 10; i++) {
+            arr[i] = idx = new Index(idx);
+        }
+        System.out.println("==============");
+    }
+
+    static class Index{
+        private Index index;
+        public Index(Index index) {
+            this.index = index;
+        }
     }
 }
