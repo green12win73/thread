@@ -31,7 +31,7 @@ public class DequeContainerTest {
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
 //                    }
-                    delayeds.add(new MyDelayed(i));
+                    delayeds.add(new MyDelayed(i, 3*i));
                 }
             }
         },"Thread-1").start();
@@ -53,19 +53,19 @@ public class DequeContainerTest {
         private Random random = new Random();
         public int i;
         public long time = 0;
-        public MyDelayed(int i){
+        private long mills = System.currentTimeMillis();
+        public MyDelayed(int i, long time){
             this.i = i;
+            this.time = time;
+        }
+
+        public long now(){
+            return (System.currentTimeMillis()-mills)/1000;
         }
 
         @Override
         public long getDelay(TimeUnit unit) {
-            while(time <= 0){
-                int i = random.nextInt(10);
-                System.out.println(i);
-                System.out.println(i * 1000 * 1000);
-                time = i ;
-            }
-            return time;
+            return time-now();
         }
 
         @Override
