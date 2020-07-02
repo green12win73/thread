@@ -2,26 +2,27 @@ package com.fq.thread;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author fangqi
  * @description
  * @date 2020/5/7 15:34
  */
-public class VolatileTest {
+public class VolatileTest2 {
 
-    private volatile int count=0;
+    private volatile AtomicInteger count=new AtomicInteger();
 
     public void increment(){
-        count++;
+        count.incrementAndGet();
     }
 
     public int getCount(){
-        return count;
+        return count.get();
     }
 
     public static void main(String[] args) {
-        VolatileTest test = new VolatileTest();
+        VolatileTest2 test = new VolatileTest2();
         //定义线程组
         ThreadGroup threadGroup = new ThreadGroup("test");
         List<Thread> threads = new ArrayList<>();
