@@ -19,7 +19,21 @@ public class MapContainerTest {
 //            map.put("map_"+i,i);
 //        }
 
-        testIdentityHashMap();
+//        testIdentityHashMap();
+        HashMap<Object, Object> hashMap = new HashMap<>(8);
+        System.out.println(15&hash("test_1"));
+        System.out.println(15&hash("test_2"));
+        System.out.println(15&hash("test_3"));
+        System.out.println(15&hash("fasdfa"));
+        System.out.println(15&hash("rty"));
+    }
+
+    public static final int hash(Object key) {
+        int h = key.hashCode();
+        int k = h >>> 16;
+        System.out.println("======h="+h+"=======");
+        System.out.println("======k="+k+"=======");
+        return h^k;
     }
 
     public static void testIdentityHashMap(){
