@@ -1,6 +1,6 @@
 package com.fq.thread.design;
 
-public class Proxy_01 {
+public class Proxy_02 {
 
     interface IDrive{
         public abstract void start();
@@ -12,6 +12,7 @@ public class Proxy_01 {
     //车主
     static class Driver implements IDrive{
         private String name;
+        private IDrive proxy;
 
         public Driver(String name) {
             this.name = name;
@@ -19,17 +20,38 @@ public class Proxy_01 {
 
         @Override
         public void start() {
-            System.out.println(this.name+"发动车辆");
+            if(this.isProxy()){
+                System.out.println(this.name+"发动车辆");
+            }else {
+                System.out.println("喝醉了，需要代驾");
+            }
         }
 
         @Override
         public void run() {
-            System.out.println(this.name+"驾驶车辆");
+            if(this.isProxy()){
+                System.out.println(this.name + "驾驶车辆");
+            }else {
+                System.out.println("喝醉了，需要代驾");
+            }
         }
 
         @Override
         public void stop() {
-            System.out.println(this.name+"停止车辆");
+            if (this.isProxy()) {
+                System.out.println(this.name + "停止车辆");
+            }else {
+                System.out.println("喝醉了，需要代驾");
+            }
+        }
+
+        public IDrive getProxy(){
+            this.proxy = new DriverProxy(this);
+            return this.proxy;
+        }
+
+        public boolean isProxy(){
+            return this.proxy!=null?true:false;
         }
     }
     //代驾
@@ -57,7 +79,11 @@ public class Proxy_01 {
     }
 
     public static void main(String[] args) {
-        DriverProxy proxy = new DriverProxy(new Driver("张三"));
+        Driver driver = new Driver("张三");
+        //不能执行对应的方法
+//        DriverProxy proxy = new DriverProxy(driver);
+        //代理成功
+        IDrive proxy = driver.getProxy();
         proxy.start();
         proxy.run();
         proxy.stop();
