@@ -1,6 +1,8 @@
 package com.fq.thread.design;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -52,12 +54,26 @@ public class Proxy_03 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Driver driver = new Driver("张三");
         DriverHandler driverHandler = new DriverHandler(driver);
-        IDrive driveProxy = (IDrive) Proxy.newProxyInstance(driverHandler.getClass().getClassLoader(), new Class[]{IDrive.class}, driverHandler);
+        proxyProcess(driverHandler);
+//        Class<?> proxyClass = Proxy.getProxyClass(driverHandler.getClass().getClassLoader(),
+//                new Class[]{IDrive.class});
+//        Constructor<?> constructor = proxyClass.getConstructor(null);
+//        IDrive driveProxy = (IDrive)constructor.newInstance(new Object[]{driverHandler});
+//        driveProxy.start();
+//        driveProxy.run();
+//        driveProxy.stop();
+    }
+
+    public static void proxyProcess(InvocationHandler handler){
+        IDrive driveProxy = (IDrive) Proxy.newProxyInstance(handler.getClass().getClassLoader(), new Class[]{IDrive.class}, handler);
         driveProxy.start();
         driveProxy.run();
         driveProxy.stop();
+
     }
+
 }
