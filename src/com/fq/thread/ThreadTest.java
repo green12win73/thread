@@ -14,33 +14,42 @@ public class ThreadTest {
             @Override
             public void run() {
                 System.out.println("==========o1 对象 wait===========");
-                synchronized (o1) {
-                    try {
-                        o1.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                boolean flag = false;
+                while (!(flag=Thread.currentThread().interrupted())){
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    System.out.println(Thread.currentThread().getName());
+                    System.out.println("中断状态："+Thread.currentThread().getState().name()+",flag="+flag);
                 }
-                System.out.println("==========o1 对象 被唤醒===========");
+                System.out.println("jiesh状态："+Thread.currentThread().getState().name()+",flag="+flag);
+//                System.out.println("==========o1 对象 被唤醒===========");
             }
         });
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                synchronized (o2) {
-                    System.out.println("==========o2 对象 唤醒其他线程===========");
-                    o2.notify();
-                }
-            }
-        });
+//        Thread t2 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true){
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    System.out.println(Thread.currentThread().getName());
+//                }
+//            }
+//        });
         t1.start();
-        t2.start();
-        t1.join();
-        t2.join();
+        Thread.sleep(3000);
+        System.out.println("中断线程");
+        t1.interrupt();
+        Thread.sleep(3000);
+        System.out.println("中断状态："+t1.getState().name());
+        System.out.println("中断状态："+t1.interrupted());
+//        t2.start();
+//        t1.join();
+//        t2.join();
     }
 }
