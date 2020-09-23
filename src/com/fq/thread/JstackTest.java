@@ -10,8 +10,13 @@ public class JstackTest {
     private int count = 0;
     public void test(){
         synchronized (this){
-            while(true) {
-                count++;
+//            while(true) {
+//                count++;
+//            }
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
