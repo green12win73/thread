@@ -1,6 +1,7 @@
 package com.fq.thread.container;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -15,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
 public class ListContainerTest {
 
     public static void main(String[] args) {
-        final int num = 100000;
+        /*final int num = 100000;
         List<Integer> vector = new Vector<>();
         List<Integer> arrayList = new ArrayList<>();
         List<Integer> linkedList = new LinkedList<>();
@@ -107,6 +108,41 @@ public class ListContainerTest {
                 }
                 System.out.println(Thread.currentThread().getName()+",耗时："+(System.currentTimeMillis()-time));
             }
+        },"copyOnWriteArrayList-read").start();*/
+        List<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
+        for (int i=0; i<10; i++) {
+            copyOnWriteArrayList.add(i);
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Iterator<Integer> iterator = copyOnWriteArrayList.iterator();
+                while(iterator.hasNext()){
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(iterator.next());
+                }
+            }
         },"copyOnWriteArrayList-read").start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long time = System.currentTimeMillis();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                for(int i=0; i<3; i++){
+                    System.out.println("替换元素值 i="+(100*i));
+                    copyOnWriteArrayList.add(i, 100*i);
+                }
+                System.out.println(Thread.currentThread().getName()+",耗时："+(System.currentTimeMillis()-time));
+            }
+        },"copyOnWriteArrayList-write").start();
+        while (true){}
     }
 }
